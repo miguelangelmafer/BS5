@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+
+<configuration>
+    <appender name="CONSOLA" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>  %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- Nombre del Archivo -->
+        <file>Logs/ErrorFile.log</file>
+        <!-- Filtro para meter en el archivo sólo los logs de ERROR -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <!-- Si es error lo acepta -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- Si no lo rechaza -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <append>true</append>
+        <!-- Patrón del log de ERROR en el Archivo -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%thread] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.example.demo" level="WARN">
+        <!-- Llamamos a la configuración de consola -->
+        <appender-ref ref="CONSOLA" />
+    </logger>
+
+    <!-- Todos los logs de nivel ERROR se guardarán en un fichero -->
+    <!-- Nivel de LOG por defecto -->
+    <root level="ERROR">
+        <!-- Llamamos a la configuración del fichero -->
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
